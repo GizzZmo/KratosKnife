@@ -16,7 +16,8 @@ class Encrypt:
             self.enc_txt =  base64.b64encode(self.text)   
 
         with open(filename, "w") as f:
-            f.write(f"import base64; exec(base64.b64decode({self.enc_txt}))")
+            # Embed the base64 encoded bytes as a string literal for b64decode
+            f.write(f"import base64; exec(base64.b64decode('{self.enc_txt.decode()}'))")
             
     
 if __name__ == '__main__':   
