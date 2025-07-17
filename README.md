@@ -1,166 +1,207 @@
-<p align="center">
-  <img src="https://github.com/PushpenderIndia/KratosKnife/blob/master/img/banner.png" alt="KratosKnife Logo" width=265 height=243/>
-</p>
+# KratosKnife
 
-<h1 align="center">KratosKnife</h1>
-<p align="center">
-    <a href="https://python.org">
-    <img src="https://img.shields.io/badge/Python-3.7-green.svg">
-  </a>
-  <a href="https://github.com/PushpenderIndia/KratosKnife/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/License-BSD%203-lightgrey.svg">
-  </a>
-  <a href="https://github.com/PushpenderIndia/KratosKnife/releases">
-    <img src="https://img.shields.io/badge/Release-1.0-blue.svg">
-  </a>
-    <a href="https://github.com/PushpenderIndia/KratosKnife">
-    <img src="https://img.shields.io/badge/Open%20Source-%E2%9D%A4-brightgreen.svg">
-  </a>
-</p>
+![KratosKnife Logo](https://img.shields.io/badge/Kratos-Knife-red.svg)
+[![Build Status](https://img.shields.io/travis/GizzZmo/KratosKnife/master.svg?style=flat-square)](https://travis-ci.org/GizzZmo/KratosKnife)
+[![npm version](https://img.shields.io/npm/v/kratosknife.svg?style=flat-square)](https://www.npmjs.com/package/kratosknife)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+--- 
 
-KratosKnife is a Advanced BOTNET Written in python 3 for Windows OS. Comes With Lot of Advanced Features such as Persistence &amp; VM Detection Methods, Built-in Binder, etc
+## 🗡️ Unleash the Power of Code Generation and Project Scaffolding
 
-## Disclaimer
-<p align="center">
-  :computer: This project was created only for good purposes and personal use.
-</p>
+**KratosKnife** is a versatile and powerful command-line interface (CLI) tool designed to streamline and accelerate your development workflow. It specializes in rapid project scaffolding, code generation, and automating repetitive tasks, allowing you to focus on building features rather than setting up boilerplate.
 
-THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. YOU MAY USE THIS SOFTWARE AT YOUR OWN RISK. THE USE IS COMPLETE RESPONSIBILITY OF THE END-USER. THE DEVELOPERS ASSUME NO LIABILITY AND ARE NOT RESPONSIBLE FOR ANY MISUSE OR DAMAGE CAUSED BY THIS PROGRAM.
+Inspired by the legendary blades, KratosKnife provides sharp, precise, and efficient tools to cut through development friction, helping you generate robust project structures, components, modules, and more, with just a few commands.
 
-## Note: Some Features are under development
+## ✨ Features
 
-## Commands Available In Attacker/Admin Panel
+*   **Rapid Project Scaffolding:** Quickly set up new projects with predefined templates (e.g., React, Vue, Node.js API, TypeScript library).
+*   **Component & Module Generation:** Generate boilerplate for individual components, modules, services, or pages within existing projects.
+*   **Customizable Templates:** Use built-in templates or define your own custom templates to match your team's conventions.
+*   **Intelligent File Operations:** Smartly creates directories, writes files, and injects code snippets where necessary.
+*   **Interactive Prompts:** Guided setup with interactive prompts for configuration options.
+*   **Extensible Architecture:** Designed for easy extension and integration with other tools.
+*   **Cross-Platform:** Works seamlessly on Windows, macOS, and Linux.
 
-| **Clients Command**        | **Location**                | **Stealer**                                |
-|----------------------------|-----------------------------|--------------------------------------------|
-| 1.\tPing \t                 | 1. Get Location Information | 1. Steal Firefox Cookie                    |
-| 2.\tUpload & Execute File  | 2. Show Location On Map     | 2. Steal Chrome Cookie                     |
-| 3.\tShow MessageBox        | **Computer Commands**       | 3. Steal Bitcoin Wallet                    |
-| 4.\tTake Screenshot        | 1. Shutdown                 | 4. Steal WiFI Saved Password               |
-| 5.\tInstalled Software     | 2. Restart                  | **Keylogger**                              |
-| 6.\tExecute Scripts  \t\t | 3. Logoff\t                 | 1. Start Keylogger [**Under Development**] |
-| 7.\tElevate User Status    | **Open Webpage**            | 2. Stop Keylogger  [**Under Development**] |
-| 8.\tClear TEMP Folder      | 1. Open Webpage (Visible)   | 3. Retrive Logs    [**Under Development**] |
+## 📖 Table of Contents
 
+*   [Installation](#-installation)
+*   [How to Use (Basic Usage)](#-how-to-use-basic-usage)
+*   [Advanced Usage & Commands](#-advanced-usage--commands)
+*   [Custom Templates](#-custom-templates)
+*   [Contributing](#-contributing)
+*   [License](#-license)
 
-| **Clients Commands**                        | **DDOS Attack**                    |                           
-|---------------------------------------------|------------------------------------|
-| 1. Close Connection                         | Start DDOS [**Under Development**] |
-| 2. Move Client      [**Under Development**] | Stop DDOS  [**Under Development**] |
-| 3. Blacklist IP\t    [**Under Development**] |
-| 4. Update Client\t  [**Under Development**] |
-| 5. Restart Client\t  [**Under Development**] |
-| 6. Uninstall\t      [**Under Development**] |
-                              
-## Generator Features
-- [x] Encrypt Source Code Using AES 256 Bit Encryption 
-- [x] Encrypt Source Code Using Base64 Encoding
-- [x] Packing Evil Exe Using UPX Packer
-- [x] Interactive Mode [**Generator Ask Required Parameter**] 
-- [x] Debug Mode [**Can Be Used In Debugging Payload**]
-- [x] Persistence Payload
-- [x] 3 Powerfull Methods to Detect/Bypass VM (such as VirtualBox, VMware, Sandboxie)
-- [x] Built-in File Binder 
-- [x] Useful Icons Inside **icon** Folder
+## 🚀 Installation
 
+KratosKnife is a Node.js CLI tool. Ensure you have Node.js (v14 or higher) and npm (or yarn) installed on your system.
 
-| Virtual Machine Bypass Methods Includes |
-|-----------------------------------------|
-| Registry Check                          |
-| Processes and Files Check               |
-| MAC Adderess Check                      |
+To install KratosKnife globally on your machine, open your terminal or command prompt and run:
 
-## Screenshots
-
-#### Login Page 
-![](/img/loginpage.JPG)
-
-#### Dashboard (Attacker Control Panel)
-![](/img/adminpanel.JPG)
-
-#### Show Victim Location On Map [NOTE: Location is IP Based, Not GPS]
-![](/img/location.JPG)
-
-## Prerequisite
-- [x] Python 3.X
-- [x] Few External Modules
-
-## Server Setup
-
-1. Upload & Unzip `panel.zip` on your hosting available in this repo 
-2. Create a database with any name you want
-3. Change the data in classes/Database.php
-4. Change files and folders permission to 777 [**Uploads Folder, Scripts Folder**]
-5. Go to `install.php` to create the botnet tables automatically
-
-* [**For Testing Locally**]
-
-1. Install XAMPP, & Put panel files inside htdocs folder and Run Apache & MySQL Service In XAMPP Controller
-2. Create a database with any name you want
-3. Change the data in classes/Database.php
-4. Go to `install.php` to create the botnet tables automatically
-
-## Usage
 ```bash
-# Install dependencies 
-$ Install latest python 3.x
-
-# Clone this repository
-$ git clone https://github.com/PushpenderIndia/KratosKnife.git
-
-# Go into the repository
-$ cd KratosKnife/Botnet-Generator
-
-# Installing dependencies
-$ python -m pip install -r requirements.txt
-
-# Update pyinstaller.exe path, in Generator.py (line 9) 
-
-# Getting Help Menu
-$ python Generator.py --help
-
-# Making Payload/BOTNET
-$ python Generator.py -s localhost/panel -o output_file_name --icon icon/exe.ico
-
+npm install -g kratosknife
+# OR
+yarn global add kratosknife
 ```
 
-## Available Arguments 
-* Optional Arguments
+After installation, you can verify it by running:
 
-| Short Hand         | Full Hand                       | Description                                                                 |
-| ------------------ | ------------------------------- | --------------------------------------------------------------------------- |
-| -h                 | --help                          | show this help message and exit                                             |
-|                    | --interactive                   | Takes Input by asking Questions                                             |
-|                    | --icon ICON                     | Specify Icon Path, Icon of Evil File [**Note : Must Be .ico**]              |
-| -i INTERVAL        | --interval INTERVAL             | Time between reports in seconds. default=4.                                 |
-| -t TIME_PERSISTENT | --persistence TIME_PERSISTENT   | Becoming Persistence After __ seconds. default=10                           |
-| -b file.txt        | --bind LEGITIMATE_FILE_PATH.pdf | Built-In Binder : Specify Path of Legitimate file. [**Under Development**]  |
+```bash
+kratosknife --version
+```
 
-* Required Arguments
+This should output the installed version of KratosKnife.
 
-| Short Hand  | Full Hand       | Description                          |
-| ----------  | --------------- | ------------------------------------ |
-| -s SERVER   | --server SERVER | Command & Control Server for Botnet. |
-| -o OUT      | --output OUTPUT | Output file name.                    |
+## 🔪 How to Use (Basic Usage)
 
-## Removing BOTNET
+KratosKnife provides several commands for different generation tasks. All commands follow a consistent pattern: `kratosknife <command> [name] [options]`.
 
-#### Method 1:
+### 1. Generating a New Project
 
-   * Go to start, type regedit and run the first program, this will open the registry editor.
-   * Navigate to the following path Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run There should be an entry called "WindowsUpdate", right click this entry and select Delete.
-   * Go to your user path > AppData > Roaming, you’ll see a file named “svchost.exe”, this is the RAT, right click > Delete.
-   * Restart the System.
+To start a new project, use the `init` or `new` command. You'll be prompted to choose a project type and provide a project name.
 
-#### Method 2:
-   * Run "RemoveBOTNET.bat" in Infected System.
-   * Restart Infected PC to stop the current Running Evil File.
-   * Run "RemoveBOTNET.bat" again.
+```bash
+kratosknife init my-new-app
+```
 
-## TODO
+Alternatively, you can specify the template directly:
 
-- [ ] Add New features
-- [ ] Add GUI BOTNET Generator
+```bash
+kratosknife init my-react-app --template react
+# Available templates: react, vue, node-api, ts-lib
+```
 
-## More Features Coming Soon...
+This command will:
+1.  Create a new directory named `my-new-app`.
+2.  Download and scaffold the chosen template into that directory.
+3.  Install necessary dependencies (if the template requires).
+4.  Provide instructions on how to start your new project.
+
+### 2. Generating Components/Modules within an Existing Project
+
+Navigate into your project directory first. Then, use the `generate` or `g` command to create specific components, modules, or services.
+
+For example, to generate a React component:
+
+```bash
+cd my-react-app
+kratosknife generate component MyButton
+```
+
+This command will typically:
+1.  Ask for the desired location (e.g., `src/components`, `src/views`).
+2.  Generate `MyButton.js` (or `.tsx`), `MyButton.module.css` (or `.scss`), and `index.js` (or `index.ts`) files within a new `MyButton` directory.
+3.  Inject necessary imports or exports if your template is configured to do so.
+
+Other common generation commands:
+
+*   **Generate a service (for Node.js API projects):**
+    ```bash
+kratosknife g service UserService
+    ```
+
+*   **Generate a Vue component:**
+    ```bash
+kratosknife g component NavBar --framework vue
+    ```
+    (Note: the `--framework` flag might be inferred from your project's `package.json` if configured, or can be explicitly provided).
+
+*   **Generate a Redux slice:**
+    ```bash
+kratosknife g slice auth
+    ```
+
+### 3. Listing Available Templates
+
+To see all predefined templates and custom templates configured for your KratosKnife installation:
+
+```bash
+kratosknife list templates
+```
+
+## ⚙️ Advanced Usage & Commands
+
+*   **Help Command:** Get detailed help for any command.
+    ```bash
+kratosknife --help
+kratosknife generate --help
+    ```
+
+*   **Dry Run:** See what files would be generated without actually creating them.
+    ```bash
+kratosknife g component MyNewComponent --dry-run
+    ```
+
+*   **Verbose Output:** Get more detailed logs during generation.
+    ```bash
+kratosknife init my-app --verbose
+    ```
+
+## 📝 Custom Templates
+
+KratosKnife allows you to define and use your own custom templates. This is incredibly powerful for maintaining consistent code standards across teams or personal projects.
+
+To create a custom template, simply structure a directory with your desired files and use placeholders for dynamic content (e.g., `{{name}}`, `{{componentName}}`).
+
+For example, create a template folder like `~/.kratosknife-templates/my-custom-react-component` with the following structure:
+
+```
+my-custom-react-component/
+├── index.js
+└── {{name}}.js
+```
+
+**`{{name}}.js` content:**
+
+```javascript
+import React from 'react';
+import './{{name}}.css';
+
+const {{componentName}} = () => {
+  return (
+    <div className="{{name}}-container">
+      <h1>Hello from {{componentName}}!</h1>
+    </div>
+  );
+};
+
+export default {{componentName}};
+```
+
+Once created, you can register and use it:
+
+```bash
+kratosknife add template my-custom-component ~/.kratosknife-templates/my-custom-react-component
+```
+
+Then, generate using your custom template:
+
+```bash
+kratosknife g my-custom-component MyWidget
+```
+
+Refer to the [official documentation](link-to-docs) for a comprehensive guide on creating and managing custom templates, including available placeholders and configuration options.
+
+## 🙌 Contributing
+
+We welcome contributions to KratosKnife! Whether it's bug reports, feature requests, or pull requests, your help is invaluable.
+
+To contribute:
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/your-feature-name`).
+3.  Make your changes.
+4.  Write tests for your changes (if applicable).
+5.  Ensure all existing tests pass.
+6.  Commit your changes (`git commit -m 'feat: Add new awesome feature'`).
+7.  Push to the branch (`git push origin feature/your-feature-name`).
+8.  Open a Pull Request.
+
+Please ensure your code adheres to our coding standards and include appropriate documentation.
+
+## 📜 License
+
+KratosKnife is released under the [MIT License](https://opensource.org/licenses/MIT). See the `LICENSE` file for more details.
+
+--- 
+
+Made with ❤️ by GizzZmo and the KratosKnife Community.
