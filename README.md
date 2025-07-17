@@ -34,24 +34,24 @@ THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. YOU MAY USE THIS
 
 | **Clients Command**        | **Location**                | **Stealer**                                |
 |----------------------------|-----------------------------|--------------------------------------------|
-| 1.	Ping 	                 | 1. Get Location Information | 1. Steal Firefox Cookie                    |
-| 2.	Upload & Execute File  | 2. Show Location On Map     | 2. Steal Chrome Cookie                     |
-| 3.	Show MessageBox        | **Computer Commands**       | 3. Steal Bitcoin Wallet                    |
-| 4.	Take Screenshot        | 1. Shutdown                 | 4. Steal WiFI Saved Password               |
-| 5.	Installed Software     | 2. Restart                  | **Keylogger**                              |
-| 6.	Execute Scripts  	   	 | 3. Logoff	                 | 1. Start Keylogger [**Under Development**] |
-| 7.	Elevate User Status    | **Open Webpage**            | 2. Stop Keylogger  [**Under Development**] |
-| 8.	Clear TEMP Folder      | 1. Open Webpage (Visible)   | 3. Retrive Logs    [**Under Development**] |
+| 1.\tPing \t                 | 1. Get Location Information | 1. Steal Firefox Cookie                    |
+| 2.\tUpload & Execute File  | 2. Show Location On Map     | 2. Steal Chrome Cookie                     |
+| 3.\tShow MessageBox        | **Computer Commands**       | 3. Steal Bitcoin Wallet                    |
+| 4.\tTake Screenshot        | 1. Shutdown                 | 4. Steal WiFI Saved Password               |
+| 5.\tInstalled Software     | 2. Restart                  | **Keylogger**                              |
+| 6.\tExecute Scripts  \t\t | 3. Logoff\t                 | 1. Start Keylogger [**Under Development**] |
+| 7.\tElevate User Status    | **Open Webpage**            | 2. Stop Keylogger  [**Under Development**] |
+| 8.\tClear TEMP Folder      | 1. Open Webpage (Visible)   | 3. Retrive Logs    [**Under Development**] |
 
 
 | **Clients Commands**                        | **DDOS Attack**                    |                           
 |---------------------------------------------|------------------------------------|
 | 1. Close Connection                         | Start DDOS [**Under Development**] |
 | 2. Move Client      [**Under Development**] | Stop DDOS  [**Under Development**] |
-| 3. Blacklist IP	    [**Under Development**] |
-| 4. Update Client	  [**Under Development**] |
-| 5. Restart Client	  [**Under Development**] |
-| 6. Uninstall	      [**Under Development**] |
+| 3. Blacklist IP\t    [**Under Development**] |
+| 4. Update Client\t  [**Under Development**] |
+| 5. Restart Client\t  [**Under Development**] |
+| 6. Uninstall\t      [**Under Development**] |
                               
 ## Generator Features
 - [x] Encrypt Source Code Using AES 256 Bit Encryption 
@@ -133,7 +133,7 @@ $ python Generator.py -s localhost/panel -o output_file_name --icon icon/exe.ico
 | -h                 | --help                          | show this help message and exit                                             |
 |                    | --interactive                   | Takes Input by asking Questions                                             |
 |                    | --icon ICON                     | Specify Icon Path, Icon of Evil File [**Note : Must Be .ico**]              |
-| -i INTERVAL        | --interval INTERVAL             | Time between reports in seconds. default=12.       [**Under Development**]  |
+| -i INTERVAL        | --interval INTERVAL             | Time between reports in seconds. default=4.                                 |
 | -t TIME_PERSISTENT | --persistence TIME_PERSISTENT   | Becoming Persistence After __ seconds. default=10                           |
 | -b file.txt        | --bind LEGITIMATE_FILE_PATH.pdf | Built-In Binder : Specify Path of Legitimate file. [**Under Development**]  |
 

