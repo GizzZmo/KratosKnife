@@ -1,7 +1,6 @@
 # KratosKnife
 
 ![KratosKnife Logo](https://img.shields.io/badge/Kratos-Knife-red.svg)
-[![npm version](https://img.shields.io/npm/v/kratosknife.svg?style=flat-square)](https://www.npmjs.com/package/kratosknife)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 --- 
