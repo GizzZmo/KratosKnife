@@ -97,18 +97,21 @@ Other common generation commands:
 
 *   **Generate a service (for Node.js API projects):**
     ```bash
-kratosknife g service UserService
+
+    kratosknife g service UserService
     ```
 
 *   **Generate a Vue component:**
     ```bash
-kratosknife g component NavBar --framework vue
+
+    kratosknife g component NavBar --framework vue
     ```
     (Note: the `--framework` flag might be inferred from your project's `package.json` if configured, or can be explicitly provided).
 
 *   **Generate a Redux slice:**
     ```bash
-kratosknife g slice auth
+
+    kratosknife g slice auth
     ```
 
 ### 3. Listing Available Templates
@@ -129,12 +132,14 @@ kratosknife generate --help
 
 *   **Dry Run:** See what files would be generated without actually creating them.
     ```bash
-kratosknife g component MyNewComponent --dry-run
+
+    kratosknife g component MyNewComponent --dry-run
     ```
 
 *   **Verbose Output:** Get more detailed logs during generation.
     ```bash
-kratosknife init my-app --verbose
+
+    kratosknife init my-app --verbose
     ```
 
 ## 📝 Custom Templates
